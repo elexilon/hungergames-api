@@ -1,11 +1,11 @@
-// models/user.js
 const mongoose = require('../config/database')
 const passportLocalMongoose = require('passport-local-mongoose')
 const { Schema } = mongoose
 
 const userSchema = new Schema({
-  name: { type: String, required: true },
   email: { type: String, required: true },
+  userType: { type: String, default: 'player' },
+  profileId: { type: Schema.Types.ObjectId, ref: 'profiles' },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now }
 })

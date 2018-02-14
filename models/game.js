@@ -1,23 +1,29 @@
-// models/game.js
 const mongoose = require('../config/database')
 const { Schema } = mongoose
 
 const playerSchema = new Schema({
   userId: { type: Schema.Types.ObjectId, ref: 'users' },
   symbol: { type: String, required: true },
-  squares: { type: Schema.Types.Array, default: [] },
+});
+
+const weightSchema = new Schema({
+  userId: { type: Schema.Types.ObjectId, ref: 'users' },
+  date: { type: Date, required: true },
+  weigh: { type: Number, default: 0 },
 });
 
 const gameSchema = new Schema({
-  squares: { type: Schema.Types.Array, default: [] },
   players: [playerSchema],
-  turn: { type: Number, default: 0 }, // player index
+  weights: [weightSchema],
   started: { type: Boolean, default: false },
-  winnerId: { type: Schema.Types.ObjectId, ref: 'users' },
   userId: { type: Schema.Types.ObjectId, ref: 'users' },
+  starts_at: { type: Date, default: Date.now },
+  ends_at: { type: Date, default: Date.now },
+  playerNumbers: { type: Number, default: 2 },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
-  draw: { type: Boolean, default: false },
+  prize1:  { type: Number, default: 0 },
+  prize2:  { type: Number, default: 0 }
 });
 
 module.exports = mongoose.model('games', gameSchema)

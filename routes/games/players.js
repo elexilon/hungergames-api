@@ -1,4 +1,3 @@
-// routes/games.js
 const router = require('express').Router()
 const passport = require('../../config/auth')
 const { Game, User } = require('../../models')
@@ -19,7 +18,6 @@ const loadGame = (req, res, next) => {
 const getPlayers = (req, res, next) => {
   Promise.all(req.game.players.map(player => User.findById(player.userId)))
     .then((users) => {
-      // Combine player data and user's name
       req.players = req.game.players.map((player) => {
         const { name } = users
           .filter((u) => u._id.toString() === player.userId.toString())[0]
