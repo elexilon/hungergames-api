@@ -1,0 +1,21 @@
+{
+  "name": "hungergames-api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:elexilon/hungergames-api.git",
+  "author": "Elexilon",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
+    "dotenv": "^5.0.0",
+    "express": "^4.16.2",
+    "jsonwebtoken": "^8.1.1",
+    "passport-jwt": "^3.0.1",
+    "socket.io": "^2.0.4",
+    "socketio-jwt-auth": "^0.0.6"
+  },
+  "devDependencies": {
+    "superagent": "^3.8.2"
+  }
+}
