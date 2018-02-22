@@ -21,8 +21,18 @@ io.on('connect', socket => {
   console.log(`${socket.request.user.name} connected to the server`)
 })
 
+const getOrigin =
+  process.env.NODE_ENV === 'development'
+    ? 'http://localhost:3000'
+    : 'https://www.l2elexilon.com'
+
+var corsOptions = {
+  origin: getOrigin,
+  optionsSuccessStatus: 200
+}
+
 app
-  .use(cors())
+  .use(cors(corsOptions))
   .use(bodyParser.urlencoded({ extended: true }))
   .use(bodyParser.json())
   .use(passport.initialize())

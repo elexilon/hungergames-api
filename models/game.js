@@ -19,7 +19,6 @@ const gameSchema = new Schema({
   userId: { type: Schema.Types.ObjectId, ref: 'users' },
   starts_at: { type: Date, default: Date.now },
   ends_at: { type: Date, default: Date.now },
-  playerNumbers: { type: Number, default: 2 },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
   prize1:  { type: Number, default: 0 },
