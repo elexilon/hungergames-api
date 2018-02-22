@@ -17,8 +17,8 @@ const io = socketIO(server)
 io.use(socketAuth);
 
 io.on('connect', socket => {
-  socket.emit('ping', `Welcome to the server, ${socket.request.user.name}`)
-  console.log(`${socket.request.user.name} connected to the server`)
+  socket.emit('ping', `Welcome to the server, ${socket.request.user.email}`)
+  console.log(`${socket.request.user.email} connected to the server`)
 })
 
 const getOrigin =

@@ -8,11 +8,15 @@ const authenticate = passport.authorize('jwt', { session: false })
 
 module.exports = io => {
   router
-    .get('/games', (req, res, next) => {
-      Game.find()
+    .get('/games', authenticate, (req, res, next) => {
+      userId: req.account._id,
+      console.log(userId);
+      Game.find({'players._id': {$gte: userId}})
         .sort({ createdAt: -1 })
-        .then((games) => res.json(games))
-        .catch((error) => next(error))
+        .then((games) => {
+          res.json(games)
+        })
+        .catch((error) => {console.log(error); next(error)})
     })
     .get('/games/:id', (req, res, next) => {
       const id = req.params.id
