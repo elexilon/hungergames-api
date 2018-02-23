@@ -16,6 +16,8 @@ const io = socketIO(server)
 
 io.use(socketAuth);
 
+io.set('transports', ['websocket', 'polling'])
+
 io.on('connect', socket => {
   socket.emit('ping', `Welcome to the server, ${socket.request.user.email}`)
   console.log(`${socket.request.user.email} connected to the server`)
