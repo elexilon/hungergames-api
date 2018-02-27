@@ -20,7 +20,7 @@ const gameSchema = new Schema({
   ends_at: { type: Date, default: Date.now },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
-  urlPic: { type: String, default: "https://www.panerabread.com/foundation/menu/details/seasonal-greens-salad-whole.jpg/_jcr_content/renditions/seasonal-greens-salad-whole.desktop.jpeg" },
+  picUrl: { type: String, default: "https://www.panerabread.com/foundation/menu/details/seasonal-greens-salad-whole.jpg/_jcr_content/renditions/seasonal-greens-salad-whole.desktop.jpeg" },
   prize1:  { type: Number, default: 0 },
   prize2:  { type: Number, default: 0 }
 });
