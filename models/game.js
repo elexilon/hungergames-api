@@ -12,17 +12,16 @@ const weightSchema = new Schema({
 });
 
 const gameSchema = new Schema({
+  title: { type: String, required: true },
+  description: { type: String, required: true },
   players: [playerSchema],
   weights: [weightSchema],
-  started: { type: Boolean, default: false },
   userId: { type: Schema.Types.ObjectId, ref: 'users' },
   starts_at: { type: Date, default: Date.now },
   ends_at: { type: Date, default: Date.now },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
-  picUrl: { type: String, default: "https://www.panerabread.com/foundation/menu/details/seasonal-greens-salad-whole.jpg/_jcr_content/renditions/seasonal-greens-salad-whole.desktop.jpeg" },
-  prize1:  { type: Number, default: 0 },
-  prize2:  { type: Number, default: 0 }
+  picUrl: { type: String }
 });
 
 module.exports = mongoose.model('games', gameSchema)
