@@ -7,7 +7,7 @@ const authenticate = passport.authorize('jwt', { session: false })
 router
   .get('/games', authenticate, (req, res, next) => {
     const id = req.account._id
-    Game.find({'players.userId': {$gte: id}, userId: id })
+    Game.find({'players.userId': {$gte: id} })
       .then(game => {
         if (!game) {
           const error = new Error('Creator profile not found!!')
@@ -20,7 +20,18 @@ router
   })
   .post('/games', authenticate, (req, res, next) => {
     const userId = req.account._id
-    const newGame = { ...req.body, userId: userId }
+    const newGame = {
+      title: req.body.title,
+      description: req.body.description,
+      players: [{ userId }],
+      weights: [],
+      userId: userId,
+      starts_at: new Date(req.body.starts_at),
+      ends_at: new Date(req.body.ends_at),
+      picUrl: req.body.picUrl
+    }
+
+    console.log(newGame)
 
     Game.create(newGame)
       .then(creatorProfile => {
