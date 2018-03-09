@@ -18,6 +18,19 @@ router
       })
       .catch(error => next(error))
   })
+  .get('/games/:id', authenticate, (req, res, next) => {
+    const id = req.account._id
+    Game.findById(req.params.id)
+      .then(game => {
+        if (!game) {
+          const error = new Error('Creator profile not found!!')
+          error.status = 404
+          return next(error)
+        }
+        res.json(game)
+      })
+      .catch(error => next(error))
+  })
   .post('/games', authenticate, (req, res, next) => {
     const userId = req.account._id
     const newGame = {
