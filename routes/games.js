@@ -77,14 +77,19 @@ router
   })
   .patch('/games/:id', authenticate, (req, res, next) => {
     const gameId = req.params.id
-    const newGame = req.body
+    const newGame = {
+      title: req.body.title,
+      description: req.body.description,
+      starts_at: new Date(req.body.starts_at),
+      ends_at: new Date(req.body.ends_at),
+      picUrl: req.body.picUrl
+    }
     const userId = req.account._id
-
     Game.findByIdAndUpdate(
       gameId,
       {
         ...newGame,
-        user: userId
+        updatedAt: new Date()
       },
       { new: true }
     )
@@ -92,7 +97,6 @@ router
         if (!game) {
           return next()
         }
-
         res.status = 200
         res.json(game)
       })
