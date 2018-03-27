@@ -1,7 +1,6 @@
 const router = require('express').Router()
 const { Game } = require('../models')
 const passport = require('../config/auth')
-
 const authenticate = passport.authorize('jwt', { session: false })
 
 router
@@ -12,7 +11,7 @@ router
         if (!game) {
           const error = new Error('Creator profile not found!!')
           error.status = 404
-          return next(error)
+          return next(error) 
         }
         res.json(game)
       })
@@ -55,13 +54,19 @@ router
   })
   .put('/games/:id', authenticate, (req, res, next) => {
     const gameId = req.params.id
-    const newGame = req.body
+    const newGame = {
+      title: req.body.title,
+      description: req.body.description,
+      starts_at: new Date(req.body.starts_at),
+      ends_at: new Date(req.body.ends_at),
+      picUrl: req.body.picUrl
+    }
     const userId = req.account._id
-
-    Game.findByIdAndUpdate(gameId,
+    Game.findByIdAndUpdate(
+      gameId,
       {
         ...newGame,
-        user: userId
+        updatedAt: new Date()
       },
       { new: true }
     )
@@ -69,7 +74,6 @@ router
         if (!game) {
           return next()
         }
-
         res.status = 200
         res.json(game)
       })
