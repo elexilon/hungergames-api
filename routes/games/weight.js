@@ -1,12 +1,16 @@
 const router = require('express').Router()
-const { Game } = require('../models')
-const passport = require('../config/auth')
+const { Game } = require('../../models')
+const passport = require('../../config/auth')
 const authenticate = passport.authorize('jwt', { session: false })
 
 router
   .put('/weights/:id', authenticate, (req, res, next) => {
     const gameId = req.params.id
-    const weight = req.body.weight
+    const newWeight = { 
+      userId: req.body.userId,
+      weight: req.body.weight,
+      date:   req.body.date
+    }
     const userId = req.account._id
 
     Game.findById(gameId)
@@ -15,31 +19,34 @@ router
           return next()
         }
 
-        const oldWeights = game.weights.filter(weight => {
-          weight.userId !== req.body.weight && weight.date === req.body.date
+        
+
+        const updatedWeights = game.weights.filter(weight => {
+          return (weight.userId.toString() !== newWeight.userId.toString() && 
+                  new Date(weight.date).getTime() !== new Date(newWeight.date).getTime()) ||
+                  (weight.userId.toString() === newWeight.userId.toString() &&
+                  new Date(weight.date).getTime() !== new Date(newWeight.date).getTime())
+        }).concat(newWeight)
+        
+        Game.findByIdAndUpdate(
+          gameId,
+          {
+            weights: updatedWeights
+          },
+          { new: true }
+        )
+        .then(game => {
+            if (!game) {
+                return next()
+            }
+            res.status = 200
+            res.json(game)
         })
-
-
-
-
       })
+      .catch(error => next(error))
+     
 
-    // Game.findByIdAndUpdate(
-    //     gameId,
-    //     {
-    //         ...newGame,
-    //         updatedAt: new Date()
-    //     },
-    //     { new: true }
-    // )
-    //     .then(game => {
-    //         if (!game) {
-    //             return next()
-    //         }
-    //         res.status = 200
-    //         res.json(game)
-    //     })
-    //     .catch(error => next(error))
+
   })
   .patch('/games/:id', authenticate, (req, res, next) => {
       const gameId = req.params.id
