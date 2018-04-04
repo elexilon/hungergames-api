@@ -8,7 +8,7 @@ const playerSchema = new Schema({
 const weightSchema = new Schema({
   userId: { type: Schema.Types.ObjectId, ref: 'users' },
   date: { type: Date, required: true },
-  weigh: { type: Number, default: 0 },
+  weight: { type: Number, default: 0 },
 });
 
 const gameSchema = new Schema({
