@@ -14,6 +14,7 @@ router
     const userId = req.account._id
 
     Game.findById(gameId)
+      .sort({ date: -1 })
       .then(game => {
         if (!game) {
           return next()
