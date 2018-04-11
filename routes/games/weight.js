@@ -20,8 +20,6 @@ router
           return next()
         }
 
-        
-
         const updatedWeights = game.weights.filter(weight => {
           return (weight.userId.toString() !== newWeight.userId.toString() && 
                   new Date(weight.date).getTime() !== new Date(newWeight.date).getTime()) ||
